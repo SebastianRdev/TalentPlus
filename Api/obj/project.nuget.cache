@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "gu560L2L4lo=",
+  "dgSpecHash": "KbTnBhQgswRlV9Y0k9O4JMMQ4fXrNSIce218tDbTeTHOGb6f0iYYdxdaf/UhpoWsLG1Nfjotiy2lWv7IBTDTBQ==",
   "success": true,
   "projectFilePath": "/home/Coder/Música/sebas/TalentPlus/Api/Api.csproj",
   "expectedPackageFiles": [
@@ -68,6 +68,8 @@
     "/home/Coder/.nuget/packages/mono.texttemplating/2.2.1/mono.texttemplating.2.2.1.nupkg.sha512",
     "/home/Coder/.nuget/packages/netstandard.library/1.6.1/netstandard.library.1.6.1.nupkg.sha512",
     "/home/Coder/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/home/Coder/.nuget/packages/npgsql/8.0.6/npgsql.8.0.6.nupkg.sha512",
+    "/home/Coder/.nuget/packages/npgsql.entityframeworkcore.postgresql/8.0.11/npgsql.entityframeworkcore.postgresql.8.0.11.nupkg.sha512",
     "/home/Coder/.nuget/packages/questpdf/2025.7.4/questpdf.2025.7.4.nupkg.sha512",
     "/home/Coder/.nuget/packages/runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl/4.3.2/runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "/home/Coder/.nuget/packages/runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl/4.3.2/runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",

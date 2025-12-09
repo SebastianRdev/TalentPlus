@@ -22,6 +22,7 @@ using System.Text;
 using Google.GenAI;
 using Application.Validators.Empleados;
 using Infrastructure.Data;
+using Infrastructure.Persistence;
 using Infrastructure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,7 +30,7 @@ var builder = WebApplication.CreateBuilder(args);
 // ==========================================
 // 1. LOAD .env FILE FIRST
 // ==========================================
-Env.Load();
+Env.Load("/home/Coder/Música/sebas/TalentPlus/.env");
 builder.Configuration.AddEnvironmentVariables();
 
 // ==========================================
@@ -77,11 +78,11 @@ var pass = Environment.GetEnvironmentVariable("DB_PASS");
 var name = Environment.GetEnvironmentVariable("DB_NAME");
 
 var connectionString = $"Host={host};Port={port};Database={name};Username={user};Password={pass};";
-/*
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString)
 );
-
+/*
 // ==========================================
 // 6. IDENTITY CONFIGURATION
 // ==========================================
@@ -140,7 +141,7 @@ builder.Services.AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies
 // ==========================================
 // 9. REPOSITORIES
 // ==========================================
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 // ==========================================
 // 10. APPLICATION SERVICES
@@ -154,16 +155,7 @@ builder.Services.AddScoped<IIdentityService, Firmness.Infrastructure.Services.Id
 // 11.2 REGISTER GEMINI SERVICE
 // ==========================================
 builder.Services.AddScoped<IGeminiService, GeminiService>();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-
-// ✅ REFACTORED: Customer services separated by responsibility
-builder.Services.AddScoped<ICustomerCrudService, Firmness.Application.Services.Customers.CustomerCrudService>();
-builder.Services.AddScoped<ICustomerRoleManagementService, Firmness.Application.Services.Customers.CustomerRoleManagementService>();
-builder.Services.AddScoped<ICustomerImportService, Firmness.Application.Services.Customers.CustomerImportService>();
-
-// Keep legacy ICustomerService temporarily for backward compatibility
-builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 builder.Services.AddScoped<IExcelService, ExcelService>();
 builder.Services.AddScoped<ICustomerSaleService, CustomerSaleService>();
@@ -183,7 +175,7 @@ builder.Services.Configure<EmailSettings>(options =>
     options.SmtpHost = Environment.GetEnvironmentVariable("SMTP_HOST") ?? "smtp.gmail.com";
     options.SmtpPort = int.Parse(Environment.GetEnvironmentVariable("SMTP_PORT") ?? "587");
     options.SenderEmail = Environment.GetEnvironmentVariable("SMTP_SENDER_EMAIL") ?? "";
-    options.SenderName = Environment.GetEnvironmentVariable("SMTP_SENDER_NAME") ?? "Firmness";
+    options.SenderName = Environment.GetEnvironmentVariable("SMTP_SENDER_NAME") ?? "TalentPlus";
     options.Username = Environment.GetEnvironmentVariable("SMTP_USERNAME") ?? "";
     options.Password = Environment.GetEnvironmentVariable("SMTP_PASSWORD") ?? "";
     options.EnableSsl = bool.Parse(Environment.GetEnvironmentVariable("SMTP_ENABLE_SSL") ?? "true");
@@ -198,8 +190,8 @@ builder.Services.AddSingleton(sp =>
     var apiKey = builder.Configuration["GEMINI_API_KEY"]
                  ?? Environment.GetEnvironmentVariable("GEMINI_API_KEY");
 
-    // Si apiKey viene null/empty, construimos el cliente sin parámetros
-    // (el SDK leerá la variable de entorno interna).
+    // If apiKey is null/empty, we build the client without parameters
+    // (the SDK will read the internal environment variable).
     return string.IsNullOrWhiteSpace(apiKey)
         ? new Google.GenAI.Client()
         : new Google.GenAI.Client(apiKey: apiKey);
@@ -304,7 +296,7 @@ app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-/*
+
 // ==========================================
 // 16. DATABASE CONNECTION TEST
 // ==========================================
@@ -326,6 +318,7 @@ using (var scope = app.Services.CreateScope())
     }
     
     // Optional: Test Gemini Service
+    /*
     try
     {
         var geminiService = services.GetRequiredService<IGeminiService>();
@@ -335,6 +328,7 @@ using (var scope = app.Services.CreateScope())
     {
         Console.WriteLine($"⚠️ Gemini Service registration issue: {ex.Message}");
     }
+    */
 }
 
 // Después de builder.Build() y antes de app.Run()
@@ -346,11 +340,11 @@ using (var scope = app.Services.CreateScope())
     // Ejecuta el seed (solo en entorno Development)
     if (app.Environment.IsDevelopment())
     {
-        await Firmness.Infrastructure.Data.Seed.AdminSeed.SeedAdminsAsync(userManager, roleManager);
+        await Infrastructure.Data.Seed.AdminSeed.SeedAdminsAsync(userManager, roleManager);
         Console.WriteLine("✅ Admin seed executed");
     }
 }
-*/
+
 // ==========================================
 // RUN APPLICATION
 // ==========================================

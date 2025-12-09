@@ -93,6 +93,10 @@
               "target": "Package",
               "version": "[8.0.21, )"
             },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.11, )"
+            },
             "QuestPDF": {
               "target": "Package",
               "version": "[2025.7.4, )"
@@ -262,7 +266,14 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "/home/Coder/Música/sebas/TalentPlus/Application/Application.csproj": {
+                "projectPath": "/home/Coder/Música/sebas/TalentPlus/Application/Application.csproj"
+              },
+              "/home/Coder/Música/sebas/TalentPlus/Domain/Domain.csproj": {
+                "projectPath": "/home/Coder/Música/sebas/TalentPlus/Domain/Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -275,9 +286,17 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "DotNetEnv": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.21, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.11, )"
             }
           },
           "imports": [
