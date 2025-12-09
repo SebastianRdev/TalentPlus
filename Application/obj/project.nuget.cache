@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "W4LHjpiuXrM=",
+  "dgSpecHash": "jWlA5o+nKl0=",
   "success": true,
   "projectFilePath": "/home/Coder/Música/sebas/TalentPlus/Application/Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/Coder/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512"
+  ],
   "logs": []
 }
