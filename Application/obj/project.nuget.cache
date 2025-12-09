@@ -1,10 +1,35 @@
 {
   "version": 2,
-  "dgSpecHash": "B6DtBKM73GWUjLi/F8fjAypwRIzc2EWd7lTeFHbbMgb/96vt0fbWdKj2Elc44yXO/hevdNlcMS99GkEfsWqiuA==",
+  "dgSpecHash": "N8g6ug3jqpg=",
   "success": true,
   "projectFilePath": "/home/Coder/Música/sebas/TalentPlus/Application/Application.csproj",
   "expectedPackageFiles": [
-    "/home/Coder/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512"
+    "/home/Coder/.nuget/packages/epplus/8.3.1/epplus.8.3.1.nupkg.sha512",
+    "/home/Coder/.nuget/packages/epplus.interfaces/8.1.0/epplus.interfaces.8.1.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.aspnetcore.http/2.3.0/microsoft.aspnetcore.http.2.3.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.aspnetcore.http.abstractions/2.3.0/microsoft.aspnetcore.http.abstractions.2.3.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.aspnetcore.http.features/2.3.0/microsoft.aspnetcore.http.features.2.3.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.aspnetcore.webutilities/2.3.0/microsoft.aspnetcore.webutilities.2.3.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.extensions.configuration/8.0.0/microsoft.extensions.configuration.8.0.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.extensions.configuration.abstractions/8.0.0/microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.extensions.configuration.fileextensions/8.0.1/microsoft.extensions.configuration.fileextensions.8.0.1.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.extensions.configuration.json/8.0.1/microsoft.extensions.configuration.json.8.0.1.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.extensions.fileproviders.abstractions/8.0.0/microsoft.extensions.fileproviders.abstractions.8.0.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.extensions.fileproviders.physical/8.0.0/microsoft.extensions.fileproviders.physical.8.0.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.extensions.filesystemglobbing/8.0.0/microsoft.extensions.filesystemglobbing.8.0.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.extensions.objectpool/8.0.11/microsoft.extensions.objectpool.8.0.11.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.extensions.options/8.0.2/microsoft.extensions.options.8.0.2.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.extensions.primitives/8.0.0/microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.io.recyclablememorystream/3.0.1/microsoft.io.recyclablememorystream.3.0.1.nupkg.sha512",
+    "/home/Coder/.nuget/packages/microsoft.net.http.headers/2.3.0/microsoft.net.http.headers.2.3.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/system.buffers/4.6.0/system.buffers.4.6.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/system.componentmodel.annotations/5.0.0/system.componentmodel.annotations.5.0.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/system.security.cryptography.pkcs/8.0.1/system.security.cryptography.pkcs.8.0.1.nupkg.sha512",
+    "/home/Coder/.nuget/packages/system.security.cryptography.xml/8.0.2/system.security.cryptography.xml.8.0.2.nupkg.sha512",
+    "/home/Coder/.nuget/packages/system.text.encoding.codepages/8.0.0/system.text.encoding.codepages.8.0.0.nupkg.sha512",
+    "/home/Coder/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,5 +1,7 @@
 using Application.Common;
+using Application.Excel;
 using Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Interfaces.Employees;
 
@@ -14,4 +16,6 @@ public interface IEmployeeService
     Task UpdateAsync(Empleado employee);
 
     Task DeleteAsync(Guid id);
+    
+    Task<ExcelImportResult> ImportFromExcelAsync(IFormFile file);
 }

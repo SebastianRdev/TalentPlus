@@ -7,11 +7,11 @@ using Microsoft.OpenApi.Models;
 using DotNetEnv;
 using OfficeOpenXml;
 using Domain.Entities;
-//using Domain.Interfaces;
-//using Infrastructure.Repositories;
+using Domain.Interfaces;
+using Infrastructure.Persistence.Repositories;
 //using Infrastructure.Services;
-//using Application.Interfaces;
-//using Application.Services;
+using Application.Interfaces;
+using Application.Services;
 //using Infrastructure.Services.Gemini;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -43,7 +43,7 @@ builder.Logging.SetMinimumLevel(LogLevel.Information);
 // ==========================================
 // 3. EXCEL LICENSE
 // ==========================================
-ExcelPackage.License.SetNonCommercialOrganization("Firmness.Api");
+ExcelPackage.License.SetNonCommercialOrganization("TalentPlus.Api");
 
 // ==========================================
 // 3.1 QUESTPDF LICENSE
@@ -157,8 +157,8 @@ builder.Services.AddScoped<IIdentityService, Firmness.Infrastructure.Services.Id
 builder.Services.AddScoped<IGeminiService, GeminiService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
-builder.Services.AddScoped<IExcelService, ExcelService>();
-builder.Services.AddScoped<ICustomerSaleService, CustomerSaleService>();
+builder.Services.AddScoped<IExcelParserService, ExcelParserService>();
+builder.Services.AddScoped<IEmployeeExcelImportService, EmployeeExcelImportService>();
 builder.Services.AddScoped<IEmailService, SmtpEmailService>();
 builder.Services.AddScoped<IReceiptPdfService, ReceiptPdfService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
@@ -267,13 +267,13 @@ if (builder.Environment.IsDevelopment())
 var app = builder.Build();
 
 // ==========================================
-// CREATE RECEIPTS DIRECTORY
+// CREATE RESUMES DIRECTORY
 // ==========================================
-var receiptsPath = Path.Combine(app.Environment.WebRootPath, "receipts");
-if (!Directory.Exists(receiptsPath))
+var resumesPath = Path.Combine(app.Environment.WebRootPath, "resume");
+if (!Directory.Exists(resumesPath))
 {
-    Directory.CreateDirectory(receiptsPath);
-    Console.WriteLine("✅ Receipts directory created");
+    Directory.CreateDirectory(resumesPath);
+    Console.WriteLine("✅ Resumes directory created");
 }
 
 // ==========================================

@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using WebAdmin.Models;
+using WebAdmin.ViewModels;
 
 namespace WebAdmin.Controllers;
 

@@ -1,4 +1,4 @@
-namespace WebAdmin.Models;
+namespace WebAdmin.ViewModels;
 
 public class ErrorViewModel
 {
