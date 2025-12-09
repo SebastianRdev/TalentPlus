@@ -16,6 +16,10 @@ using Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Application.DTOs.Excel;
+using Application.Excel;
+using Application.Interfaces.Employees;
+using Application.Services;
 //using Application.Configuration;
 //using Infrastructure.Services.Identity;
 //using Infrastructure.Services.Email;
@@ -24,6 +28,7 @@ using Application.Validators.Empleados;
 using Infrastructure.Data;
 using Infrastructure.Persistence;
 using Infrastructure.Identity;
+using Infrastructure.Services.Excel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,7 +87,6 @@ var connectionString = $"Host={host};Port={port};Database={name};Username={user}
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString)
 );
-/*
 // ==========================================
 // 6. IDENTITY CONFIGURATION
 // ==========================================
@@ -97,7 +101,6 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
-*/
 // ==========================================
 // 6.1 JWT AUTHENTICATION
 // ==========================================
@@ -132,11 +135,10 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
     });
 });
-/*
 // ==========================================
 // 8. AUTOMAPPER
 // ==========================================
-builder.Services.AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies());
+//builder.Services.AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies());
 
 // ==========================================
 // 9. REPOSITORIES
@@ -149,27 +151,27 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 // ==========================================
 // 11.1 REGISTER IDENTITY SERVICE (Infrastructure)
 // ==========================================
-builder.Services.AddScoped<IIdentityService, Firmness.Infrastructure.Services.Identity.IdentityService>();
+//builder.Services.AddScoped<IIdentityService, Infrastructure.Services.Identity.IdentityService>();
 
 // ==========================================
 // 11.2 REGISTER GEMINI SERVICE
 // ==========================================
-builder.Services.AddScoped<IGeminiService, GeminiService>();
+//builder.Services.AddScoped<IGeminiService, GeminiService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-
-builder.Services.AddScoped<IExcelParserService, ExcelParserService>();
+builder.Services.AddScoped<IExcelService, ExcelService>();
 builder.Services.AddScoped<IEmployeeExcelImportService, EmployeeExcelImportService>();
-builder.Services.AddScoped<IEmailService, SmtpEmailService>();
-builder.Services.AddScoped<IReceiptPdfService, ReceiptPdfService>();
-builder.Services.AddScoped<IJwtService, JwtService>();
+//builder.Services.AddScoped<IEmailService, SmtpEmailService>();
+//builder.Services.AddScoped<IReceiptPdfService, ReceiptPdfService>();
+builder.Services.AddScoped<IJwtService, Infrastructure.Services.Identity.JwtService>();
 
-builder.Services.AddScoped<IImportService, ImportService>();
-builder.Services.AddScoped<ISqlAgentService, Firmness.Infrastructure.Services.AI.SqlAgentService>();
+//builder.Services.AddScoped<IImportService, ImportService>();
+//builder.Services.AddScoped<ISqlAgentService, Firmness.Infrastructure.Services.AI.SqlAgentService>();
 
 
 // ==========================================
 // 11.1 EMAIL CONFIGURATION
 // ==========================================
+/*
 builder.Services.Configure<EmailSettings>(options =>
 {
     options.SmtpHost = Environment.GetEnvironmentVariable("SMTP_HOST") ?? "smtp.gmail.com";
@@ -181,7 +183,7 @@ builder.Services.Configure<EmailSettings>(options =>
     options.EnableSsl = bool.Parse(Environment.GetEnvironmentVariable("SMTP_ENABLE_SSL") ?? "true");
     options.AdminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL") ?? "";
 });
-
+*/
 // ==========================================
 // 11.2 GEMINI .NET OFFICIAL CLIENT
 // ==========================================
@@ -206,7 +208,7 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
     });
-*/
+
 // ==========================================
 // 12.1 FLUENTVALIDATION
 // ==========================================

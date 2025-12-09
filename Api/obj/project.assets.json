@@ -3400,7 +3400,8 @@
           "Domain": "1.0.0",
           "EPPlus": "8.3.1",
           "FluentValidation": "12.1.1",
-          "Microsoft.AspNetCore.Http": "2.3.0"
+          "Microsoft.AspNetCore.Http": "2.3.0",
+          "Microsoft.Extensions.Identity.Stores": "8.0.11"
         },
         "compile": {
           "bin/placeholder/Application.dll": {}
@@ -3426,6 +3427,8 @@
           "Application": "1.0.0",
           "Domain": "1.0.0",
           "DotNetEnv": "3.1.1",
+          "Google.GenAI": "0.7.0",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.21",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.21",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.11"
         },

@@ -14,7 +14,7 @@ public class ExcelService : IExcelService
         var worksheet = package.Workbook.Worksheets[0];
 
         var headers = new List<string>();
-        var result = new List<Dictionary<string, string>>();
+        var rows = new List<Dictionary<string, string>>();
 
         for (int col = 1; col <= worksheet.Dimension.Columns; col++)
             headers.Add(worksheet.Cells[1, col].Text.Trim());
@@ -26,9 +26,9 @@ public class ExcelService : IExcelService
             for (int col = 1; col <= headers.Count; col++)
                 dict[headers[col - 1]] = worksheet.Cells[row, col].Text;
 
-            result.Add(dict);
+            rows.Add(dict);
         }
 
-        return result;
+        return rows;
     }
 }

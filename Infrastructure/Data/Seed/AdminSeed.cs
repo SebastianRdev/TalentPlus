@@ -9,6 +9,11 @@ public static class AdminSeed
 {
     public static async Task SeedAdminsAsync(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
     {
+        if (!await roleManager.RoleExistsAsync("Admin"))
+        {
+            await roleManager.CreateAsync(new ApplicationRole { Name = "Admin" });
+        }
+
         var adminUsers = new[]
         {
             new ApplicationUser
@@ -34,6 +39,13 @@ public static class AdminSeed
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(admin, "Admin");
+                }
+            }
+            else
+            {
+                if (!await userManager.IsInRoleAsync(existingUser, "Admin"))
+                {
+                    await userManager.AddToRoleAsync(existingUser, "Admin");
                 }
             }
         }

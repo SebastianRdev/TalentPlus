@@ -1,5 +1,6 @@
 using Application.Interfaces.Employees;
 using Application.Services;
+using Application.DTOs.Empleados;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,57 @@ public class EmployeesController : ControllerBase
         _employeeService = employeeService;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var employees = await _employeeService.GetAllAsync();
+        return Ok(employees);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var employee = await _employeeService.GetByIdAsync(id);
+        if (employee == null)
+            return NotFound();
+        return Ok(employee);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(EmployeeCreateDto dto)
+    {
+        await _employeeService.CreateAsync(dto);
+        return Created("", null);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(Guid id, EmployeeUpdateDto dto)
+    {
+        try
+        {
+            await _employeeService.UpdateAsync(id, dto);
+            return NoContent();
+        }
+        catch (InvalidOperationException ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        try
+        {
+            await _employeeService.DeleteAsync(id);
+            return NoContent();
+        }
+        catch (InvalidOperationException ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+
     [HttpPost("import-excel")]
     public async Task<IActionResult> ImportExcel(IFormFile file)
     {
@@ -31,8 +83,9 @@ public class EmployeesController : ControllerBase
         return Ok(new
         {
             message = "Importación finalizada",
-            result.Inserted,
-            result.Updated
+            result.Created,
+            result.Updated,
+            result.Errors
         });
     }
 }

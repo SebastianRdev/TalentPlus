@@ -1,0 +1,433 @@
+@model IEnumerable<WebAdmin.ViewModels.Employees.EmployeeViewModel>
+
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "Employee Management";
+    var searchTerm = ViewData["SearchTerm"] as string;
+    var employeesList = Model.ToList();
+    var apiBaseUrl = Configuration["ApiSettings:PublicBaseUrl"] ?? "https://localhost:5264";
+
+    // Pagination
+    int currentPage = ViewData["CurrentPage"] as int? ?? 1;
+    int pageSize = 10;
+    int totalEmployees = employeesList.Count;
+    int totalPages = (int)Math.Ceiling(totalEmployees / (double)pageSize);
+
+    var pagedEmployees = employeesList
+    .Skip((currentPage - 1) * pageSize)
+    .Take(pageSize)
+    .ToList();
+}
+
+
+@Html.AntiForgeryToken()
+
+<main class="flex-1 flex flex-col h-screen overflow-y-auto">
+    <div class="p-6 md:p-8 space-y-6">
+
+        <!-- Page Heading -->
+        <div class="flex flex-wrap items-center justify-between gap-4">
+            <div class="flex min-w-72 flex-col gap-2">
+                <h1 class="text-gray-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-tight">Employee Management</h1>
+                <p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">Manage your company's employees.</p>
+            </div>
+
+            <!-- Import Excel Button -->
+            <!-- TODO: Implement Employee Import -->
+            <button class="flex items-center justify-center gap-2 min-w-[84px] cursor-pointer rounded-lg h-11 px-5 bg-green-600 text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-green-700" id="importExcelBtn">
+                <span class="material-symbols-outlined">cloud_upload</span>
+                <span class="truncate">Importar Excel</span>
+            </button>
+            
+
+            <a asp-controller="Employees" asp-action="Create" class="flex items-center justify-center gap-2 min-w-[84px] cursor-pointer rounded-lg h-11 px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90">
+                <span class="material-symbols-outlined">add_circle</span>
+                <span class="truncate">Create New Employee</span>
+            </a>
+        </div>
+
+        <!-- Notifications -->
+        <partial name="_Notifications" />
+
+        <!-- Search and Filter Bar -->
+        <form asp-action="Index" method="get" class="flex flex-col md:flex-row gap-4">
+            <div class="flex-grow">
+                <label class="flex flex-col min-w-40 h-12 w-full">
+                    <div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-white dark:bg-background-dark border border-gray-300 dark:border-gray-700 focus-within:ring-2 focus-within:ring-primary">
+                        <div class="text-gray-400 dark:text-gray-500 flex items-center justify-center pl-4">
+                            <span class="material-symbols-outlined">search</span>
+                        </div>
+                        <input name="term"
+                               value="@searchTerm"
+                               class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-800 dark:text-gray-200 focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-gray-400 dark:placeholder:text-gray-500 px-4 pl-2 text-base font-normal leading-normal"
+                               placeholder="Search by name or document..."/>
+                    </div>
+                </label>
+            </div>
+
+            <div class="flex gap-2">
+                <button type="submit" class="h-12 px-6 rounded-lg bg-gray-800 dark:bg-gray-700 text-white hover:bg-gray-900 dark:hover:bg-gray-600 font-medium">
+                    Search
+                </button>
+                @if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    <a asp-action="Index" class="h-12 px-6 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 font-medium flex items-center">
+                        Clear
+                    </a>
+                }
+            </div>
+        </form>
+
+        @if (!string.IsNullOrEmpty(searchTerm))
+        {
+            <div class="text-gray-600 dark:text-gray-400">
+                Showing results for: <strong class="text-gray-800 dark:text-gray-200">"@searchTerm"</strong>
+            </div>
+        }
+        
+        <!-- Table Container -->
+        <div class="bg-white dark:bg-gray-900/50 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+            @if (pagedEmployees.Any())
+            {
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm">
+                        <thead class="bg-gray-50 dark:bg-gray-800/50">
+                        <tr class="text-left">
+                            <th class="px-6 py-4 font-medium text-gray-600 dark:text-gray-300">Documento</th>
+                            <th class="px-6 py-4 font-medium text-gray-600 dark:text-gray-300">Nombre Completo</th>
+                            <th class="px-6 py-4 font-medium text-gray-600 dark:text-gray-300">Cargo</th>
+                            <th class="px-6 py-4 font-medium text-gray-600 dark:text-gray-300">Departamento</th>
+                            <th class="px-6 py-4 font-medium text-gray-600 dark:text-gray-300">Email</th>
+                            <th class="px-6 py-4 font-medium text-gray-600 dark:text-gray-300">Estado</th>
+                            <th class="px-6 py-4 font-medium text-gray-600 dark:text-gray-300 text-center">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+                        @foreach (var employee in pagedEmployees)
+                        {
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-white font-medium">
+                                    @employee.Documento
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-white font-medium">
+                                    @employee.FullName
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-white font-medium">
+                                    @employee.Cargo
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-white font-medium">
+                                    @employee.Departamento
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-white font-medium">
+                                    @employee.Email
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-white font-medium">
+                                    @employee.Estado
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">
+                                    <div class="flex justify-center items-center gap-2">
+                                        <a asp-action="Details" asp-route-id="@employee.Id"
+                                           class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                                           title="View Details">
+                                            <span class="material-symbols-outlined text-xl">visibility</span>
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@employee.Id"
+                                           class="p-2 rounded-full hover:bg-yellow-100 dark:hover:bg-yellow-900/50 text-yellow-500 hover:text-yellow-600"
+                                           title="Edit">
+                                            <span class="material-symbols-outlined text-xl">edit</span>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@employee.Id"
+                                           class="p-2 rounded-full hover:bg-red-100 dark:hover:bg-red-900/50 text-red-500 hover:text-red-600"
+                                           title="Delete">
+                                            <span class="material-symbols-outlined text-xl">delete</span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="p-8 text-center text-gray-500 dark:text-gray-400">
+                    No employees found.
+                </div>
+            }
+        </div>
+    </div>
+</main>
+
+
+<!-- Modal for Import Excel -->
+<div id="importExcelModal" class="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4 hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg w-full max-w-md">
+        <div class="p-6">
+            <div class="flex items-start justify-between">
+                <h2 class="text-lg font-bold text-gray-900 dark:text-white">Importar Clientes desde Excel</h2>
+                <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200" id="closeImportModal">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+            <div class="mt-6">
+                <form id="importExcelForm" method="post" enctype="multipart/form-data" asp-action="ImportExcel">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="entityType" value="customer" />
+                    
+                    <label class="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors" for="file-upload">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6 text-center">
+                            <span class="material-symbols-outlined text-4xl text-gray-400">cloud_upload</span>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Excel files (.xlsx, .xls)</p>
+                        </div>
+                        <input accept=".xlsx, .xls" type="file" name="file" id="file-upload"/>
+                    </label>
+                </form>
+            </div>
+        </div>
+        <div class="flex justify-end gap-3 px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 rounded-b-xl">
+            <button class="h-10 px-4 rounded-lg bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 text-sm font-bold hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors" id="cancelImportBtn">Cancelar</button>
+            <button class="flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors" id="confirmImportBtn">
+                <span class="material-symbols-outlined text-lg">upload</span>
+                <span>Importar</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const importExcelBtn = document.getElementById('importExcelBtn');
+        const importExcelModal = document.getElementById('importExcelModal');
+        const closeImportModal = document.getElementById('closeImportModal');
+        const cancelImportBtn = document.getElementById('cancelImportBtn');
+        const headersOutput = document.getElementById('headersOutput');
+
+        let currentPreviewData = null; // Guardar el preview para confirmar después
+
+        // Abrir modal
+        importExcelBtn.addEventListener('click', () => {
+            importExcelModal.classList.remove('hidden');
+            headersOutput.innerHTML = '';
+            currentPreviewData = null;
+        });
+
+        // Cerrar modal
+        closeImportModal.addEventListener('click', () => importExcelModal.classList.add('hidden'));
+        cancelImportBtn.addEventListener('click', () => importExcelModal.classList.add('hidden'));
+
+        // Botón de confirmar subida - FLUJO COMPLETO
+        document.getElementById('confirmImportBtn').addEventListener('click', async function() {
+            const fileInput = document.getElementById('file-upload');
+
+            if (!fileInput.files.length) {
+                alert('Por favor selecciona un archivo.');
+                headersOutput.textContent = "No se seleccionó ningún archivo.";
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            headersOutput.innerHTML = "📤 Procesando archivo Excel...";
+
+            try {
+                // PASO 1: Llamar a /api/excel/preview
+                const apiBaseUrl = '@apiBaseUrl';
+                const previewResponse = await fetch(`${apiBaseUrl}/api/excel/preview?entityType=Customer`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!previewResponse.ok) {
+                    const errorText = await previewResponse.text();
+                    headersOutput.innerHTML = `<p class="text-red-600">❌ Error: ${errorText}</p>`;
+                    alert('Error al procesar archivo: ' + errorText);
+                    return;
+                }
+
+                const previewResult = await previewResponse.json();
+
+                if (!previewResult.success) {
+                    headersOutput.innerHTML = `<p class="text-red-600">❌ Error: ${previewResult.message}</p>`;
+                    alert('Error: ' + previewResult.message);
+                    return;
+                }
+
+                // Close the modal automatically
+                importExcelModal.classList.add('hidden');
+
+                // Guardar el preview para confirmar después
+                currentPreviewData = previewResult.data;
+
+                // PASO 2: Mostrar preview con filas válidas e inválidas
+                const validRows = currentPreviewData.validRows || [];
+                const invalidRows = currentPreviewData.invalidRows || [];
+                const totalValid = currentPreviewData.totalValid || 0;
+                const totalInvalid = currentPreviewData.totalInvalid || 0;
+
+                headersOutput.innerHTML = `
+                    <div class="flex flex-col gap-6">
+                        <!-- Stats -->
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            <div class="flex flex-1 flex-col gap-2 rounded-lg border border-[#cfe7d7] bg-[#f8fcf9] p-5 dark:border-zinc-800 dark:bg-zinc-900">
+                                <p class="text-base font-medium leading-normal text-[#0d1b12] dark:text-zinc-300">Total de Filas</p>
+                                <p class="text-3xl font-bold leading-tight tracking-tight text-[#0d1b12] dark:text-white">${totalValid + totalInvalid}</p>
+                            </div>
+                            <div class="flex flex-1 flex-col gap-2 rounded-lg border border-green-200 bg-green-50 p-5 dark:border-green-900/50 dark:bg-green-500/10">
+                                <p class="text-base font-medium leading-normal text-green-800 dark:text-green-300">Filas Válidas (✅)</p>
+                                <p class="text-3xl font-bold leading-tight tracking-tight text-green-600 dark:text-green-400">${totalValid}</p>
+                            </div>
+                            <div class="flex flex-1 flex-col gap-2 rounded-lg border border-red-200 bg-red-50 p-5 dark:border-red-900/50 dark:bg-red-500/10">
+                                <p class="text-base font-medium leading-normal text-red-800 dark:text-red-300">Filas Inválidas (❌)</p>
+                                <p class="text-3xl font-bold leading-tight tracking-tight text-red-600 dark:text-red-400">${totalInvalid}</p>
+                            </div>
+                        </div>
+
+                        ${invalidRows.length > 0 ? `
+                        <div class="flex flex-col gap-2 rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-900/50 dark:bg-red-500/10">
+                            <h3 class="flex items-center gap-2 text-lg font-bold leading-tight tracking-[-0.015em] text-red-800 dark:text-red-300">
+                                <span class="material-symbols-outlined">warning</span>
+                                Se encontraron errores en las siguientes filas:
+                            </h3>
+                            <div class="flex flex-col divide-y divide-red-200/50 dark:divide-red-900/50">
+                                ${invalidRows.slice(0, 5).map(row => `
+                                    <div class="flex items-center gap-4 py-3">
+                                        <div class="flex flex-col justify-center">
+                                            <p class="font-medium leading-normal text-red-900 dark:text-red-200">Fila ${row.rowNumber}: ${row.errors.join(', ')}</p>
+                                            <p class="text-sm font-normal leading-normal text-red-700 dark:text-red-400 line-clamp-1">Contenido: ${Object.values(row.rowData || {}).join(', ')}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                                ${invalidRows.length > 5 ? `
+                                    <div class="py-3">
+                                        <p class="text-sm text-red-700 dark:text-red-400">... y ${invalidRows.length - 5} errores más</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                        ` : ''}
+
+                        ${validRows.length > 0 ? `
+                        <div class="flex flex-col gap-3">
+                            <h3 class="text-lg font-bold leading-tight tracking-[-0.015em] text-[#0d1b12] dark:text-white">Previsualización de Filas Válidas</h3>
+                            <div class="overflow-hidden rounded-lg border border-[#cfe7d7] dark:border-zinc-800">
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full text-sm">
+                                        <thead class="bg-green-50/50 dark:bg-green-500/10">
+                                            <tr>
+                                                ${Object.keys(validRows[0].rowData).map(key => `
+                                                    <th class="whitespace-nowrap px-4 py-3 text-left font-semibold text-green-800 dark:text-green-300" scope="col">${key}</th>
+                                                `).join('')}
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-[#e7f3eb] dark:divide-zinc-800/50">
+                                            ${validRows.slice(0, 3).map(row => `
+                                                <tr class="bg-[#f8fcf9] dark:bg-zinc-900/50">
+                                                    ${Object.values(row.rowData).map(value => `
+                                                        <td class="whitespace-nowrap px-4 py-3 text-[#0d1b12] dark:text-zinc-300">${value}</td>
+                                                    `).join('')}
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                ${validRows.length > 3 ? `
+                                    <div class="px-4 py-2 bg-[#f8fcf9] dark:bg-zinc-900/50 border-t border-[#e7f3eb] dark:border-zinc-800/50">
+                                        <p class="text-xs text-zinc-600 dark:text-zinc-400">... y ${validRows.length - 3} filas más</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                        ` : ''}
+
+                        <div class="flex flex-col-reverse justify-end gap-3 pt-4 sm:flex-row">
+                            <button id="cancelPreviewBtn" class="flex h-11 items-center justify-center rounded-lg bg-zinc-100 px-6 text-sm font-semibold text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700">
+                                Cancelar
+                            </button>
+                            ${validRows.length > 0 ? `
+                            <button id="confirmInsertBtn" class="flex h-11 items-center justify-center rounded-lg bg-green-500 px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-green-600 dark:bg-primary dark:text-background-dark dark:hover:bg-primary/90">
+                                Confirmar e Insertar ${totalValid} registros
+                            </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+
+                // PASO 3: Manejar confirmación de inserción
+                const cancelPreviewBtn = document.getElementById('cancelPreviewBtn');
+                const confirmInsertBtn = document.getElementById('confirmInsertBtn');
+
+                if (cancelPreviewBtn) {
+                    cancelPreviewBtn.addEventListener('click', () => {
+                        importExcelModal.classList.add('hidden');
+                        headersOutput.innerHTML = '';
+                        currentPreviewData = null;
+                    });
+                }
+
+                if (confirmInsertBtn) {
+                    confirmInsertBtn.addEventListener('click', async () => {
+                        confirmInsertBtn.disabled = true;
+                        confirmInsertBtn.textContent = 'Insertando...';
+
+                        try {
+                            // Llamar a /api/excel/confirm
+                            const confirmResponse = await fetch(`${apiBaseUrl}/api/excel/confirm`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(currentPreviewData)
+                            });
+
+                            if (!confirmResponse.ok) {
+                                const errorText = await confirmResponse.text();
+                                alert('Error al confirmar importación: ' + errorText);
+                                confirmInsertBtn.disabled = false;
+                                confirmInsertBtn.textContent = `Confirmar e Insertar ${totalValid} registros`;
+                                return;
+                            }
+
+                            const confirmResult = await confirmResponse.json();
+
+                            if (!confirmResult.success) {
+                                alert('Error: ' + confirmResult.message);
+                                confirmInsertBtn.disabled = false;
+                                confirmInsertBtn.textContent = `Confirmar e Insertar ${totalValid} registros`;
+                                return;
+                            }
+
+                            // Éxito!
+                            const insertedCount = confirmResult.data.insertedCount || 0;
+                            const failedRows = confirmResult.data.failedRows || [];
+
+                            alert(`✅ Importación completada!\n\n` +
+                                  `Registros insertados: ${insertedCount}\n` +
+                                  `Filas fallidas: ${failedRows.length}`);
+
+                            importExcelModal.classList.add('hidden');
+                            window.location.reload(); // Recargar para ver los nuevos datos
+
+                        } catch (err) {
+                            console.error(err);
+                            alert('Error al confirmar importación: ' + err.message);
+                            confirmInsertBtn.disabled = false;
+                            confirmInsertBtn.textContent = `Confirmar e Insertar ${totalValid} registros`;
+                        }
+                    });
+                }
+
+            } catch(err) {
+                console.error(err);
+                alert('Error al procesar archivo: ' + err.message);
+                headersOutput.innerHTML = `<p class="text-red-600">Error: ${err.message}</p>`;
+            }
+        });
+    });
+</script>
+
+
+
