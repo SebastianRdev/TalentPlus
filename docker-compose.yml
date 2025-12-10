@@ -1,0 +1,56 @@
+services:
+  talentplus-api:
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+    container_name: talentplus-api
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_SENDER_EMAIL=${SMTP_SENDER_EMAIL}
+      - SMTP_SENDER_NAME=${SMTP_SENDER_NAME:-TalentPlus}
+      - SMTP_ENABLE_SSL=${SMTP_ENABLE_SSL:-true}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./Api/wwwroot/receipts:/app/wwwroot/receipts
+    networks:
+      - talentplus-network
+
+  talentplus-webadmin:
+    build:
+      context: .
+      dockerfile: WebAdmin/Dockerfile
+    container_name: talentplus-webadmin
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ApiSettings__BaseUrl=http://talentplus-api:8080/api/
+      - ApiSettings__PublicBaseUrl=http://localhost:8081
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    ports:
+      - "8082:8080"
+    depends_on:
+      - talentplus-api
+    networks:
+      - talentplus-network
+
+networks:
+  talentplus-network:
+    driver: bridge
