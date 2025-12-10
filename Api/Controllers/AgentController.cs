@@ -18,7 +18,6 @@ public class AgentController : ControllerBase
     }
 
     [HttpPost("query")]
-    [Authorize(Roles = "Admin")] 
     public async Task<IActionResult> Query([FromBody] AgentQueryDto request)
     {
         if (string.IsNullOrWhiteSpace(request.Message))

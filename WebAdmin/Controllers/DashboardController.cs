@@ -31,6 +31,7 @@ public class DashboardController : Controller
             ActiveEmployees = 0
         };
 
-        return View(model);
+        // Especifica que debe usar la vista "Dashboard.cshtml"
+        return View("Dashboard", model); 
     }
 }

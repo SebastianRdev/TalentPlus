@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -20,9 +21,41 @@ public class AuthService : IAuthService
         if (user == null)
             return AuthResult.Failure("Usuario no encontrado.");
 
-        var result = await _signInManager.PasswordSignInAsync(user, password, false, false);
-        if (!result.Succeeded)
+        // 1. Verificar la contraseña sin iniciar sesión de inmediato
+        var passwordCheck = await _userManager.CheckPasswordAsync(user, password);
+        if (!passwordCheck)
             return AuthResult.Failure("Credenciales inválidas.");
+
+        // 2. Si la contraseña es correcta, obtenemos todos los roles del usuario.
+        var roles = await _userManager.GetRolesAsync(user);
+
+        // 3. Crear manualmente los Claims, incluyendo el ClaimTypes.Role
+        var claims = new List<Claim>
+        {
+            // Claims básicos (necesarios para que Identity reconozca al usuario)
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.UserName ?? user.Email),
+        
+            // Puedes agregar más claims si es necesario, como el email:
+            new Claim(ClaimTypes.Email, user.Email)
+        };
+
+        // 4. Agregar los Claims de Rol
+        foreach (var role in roles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
+
+        // 5. Crear la identidad y el principal
+        var claimsIdentity = new ClaimsIdentity(claims, IdentityConstants.ApplicationScheme);
+        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+    
+        // 6. Finalmente, realiza el Sign In de forma manual. 
+        // Esto escribe la cookie con todos los claims, incluyendo los roles.
+        await _signInManager.SignInAsync(user, isPersistent: false, authenticationMethod: null);
+    
+        // Opcional: Forzar el Sign In con el principal recién creado si tienes problemas con el SignOut por defecto:
+        // await _signInManager.Context.SignInAsync(IdentityConstants.ApplicationScheme, claimsPrincipal);
 
         return AuthResult.SuccessResult();
     }

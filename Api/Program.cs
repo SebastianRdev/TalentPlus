@@ -130,9 +130,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.WithOrigins("http://localhost:5244")
               .AllowAnyMethod()
-              .AllowAnyHeader();
+              .AllowAnyHeader()
+              .AllowCredentials();
     });
 });
 // ==========================================
@@ -165,7 +166,7 @@ builder.Services.AddScoped<IEmailService, SmtpEmailService>();
 builder.Services.AddScoped<IJwtService, Infrastructure.Services.Identity.JwtService>();
 
 //builder.Services.AddScoped<IImportService, ImportService>();
-//builder.Services.AddScoped<ISqlAgentService, Firmness.Infrastructure.Services.AI.SqlAgentService>();
+builder.Services.AddScoped<ISqlAgentService, Infrastructure.Services.AI.SqlAgentService>();
 
 
 // ==========================================

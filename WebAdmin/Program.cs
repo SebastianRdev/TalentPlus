@@ -31,9 +31,19 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // ==========================================
 // 3. CONFIGURACIÓN DE IDENTITY
 // ==========================================
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+// ==========================================
+// 3. CONFIGURACIÓN DE IDENTITY (CORREGIDO)
+// ==========================================
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => // <-- Usa AddIdentity y especifica ApplicationRole
+    {
+        // Puedes copiar las opciones de contraseña que usaste en el proyecto API aquí, si quieres un control fino.
+        // O dejar las opciones predeterminadas.
+        options.SignIn.RequireConfirmedAccount = false; // Cambiado a false para simplificar el login, si no estás usando confirmación.
+    })
     .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders(); // Añadido para configurar correctamente el sistema de Identity
+    .AddDefaultTokenProviders();
+
+// 💡 Nota: Asegúrate de que tu proyecto web tenga la referencia al paquete Microsoft.AspNetCore.Identity.UI si la página de login/registro es predeterminada.
 
 // ==========================================
 // 4. SERVICIOS NECESARIOS
@@ -72,6 +82,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
 
 app.Run();
