@@ -31,15 +31,9 @@ Before running the application, you must create a `.env` file in the project roo
 Then edit `.env` with your database credentials and any other necessary configuration.
 
 ## Important Setup Steps
-1. **Create the resume folder**:
 
-bash   mkdir -p WebAdmin/wwwroot/resume
-```
-   This folder is required for storing employee resume files.
-
-2. **Excel Import Testing:**
+1. **Excel Import Testing:**
    To test the Excel import functionality, use the sample file located at:
-```
    __docs/Empleaos.xlsx
 
 **Test Accounts**
