@@ -147,14 +147,6 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 // ==========================================
-// 10. APPLICATION SERVICES
-// ==========================================
-// ==========================================
-// 11.1 REGISTER IDENTITY SERVICE (Infrastructure)
-// ==========================================
-//builder.Services.AddScoped<IIdentityService, Infrastructure.Services.Identity.IdentityService>();
-
-// ==========================================
 // 11.2 REGISTER GEMINI SERVICE
 // ==========================================
 //builder.Services.AddScoped<IGeminiService, GeminiService>();
@@ -317,22 +309,9 @@ using (var scope = app.Services.CreateScope())
     {
         Console.WriteLine($"❌ Database connection error: {ex.Message}");
     }
-    
-    // Optional: Test Gemini Service
-    /*
-    try
-    {
-        var geminiService = services.GetRequiredService<IGeminiService>();
-        Console.WriteLine("✅ Gemini Service registered successfully");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"⚠️ Gemini Service registration issue: {ex.Message}");
-    }
-    */
+
 }
 
-// Después de builder.Build() y antes de app.Run()
 using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -342,7 +321,8 @@ using (var scope = app.Services.CreateScope())
     if (app.Environment.IsDevelopment())
     {
         await Infrastructure.Data.Seed.AdminSeed.SeedAdminsAsync(userManager, roleManager);
-        Console.WriteLine("✅ Admin seed executed");
+        await Infrastructure.Data.Seed.EmployeeSeed.SeedEmployeeAsync(userManager, roleManager);
+        Console.WriteLine("✅ Admin and employee seed executed");
     }
 }
 

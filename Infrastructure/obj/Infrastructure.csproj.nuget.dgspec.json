@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Infrastructure\\Infrastructure.csproj": {}
+    "/home/Coder/Música/sebas/TalentPlus/Infrastructure/Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Application\\Application.csproj": {
+    "/home/Coder/Música/sebas/TalentPlus/Application/Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Application\\Application.csproj",
+        "projectUniqueName": "/home/Coder/Música/sebas/TalentPlus/Application/Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Application\\Application.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Application\\obj\\",
+        "projectPath": "/home/Coder/Música/sebas/TalentPlus/Application/Application.csproj",
+        "packagesPath": "/home/Coder/.nuget/packages/",
+        "outputPath": "/home/Coder/Música/sebas/TalentPlus/Application/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/Coder/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -26,8 +26,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Domain\\Domain.csproj"
+              "/home/Coder/Música/sebas/TalentPlus/Domain/Domain.csproj": {
+                "projectPath": "/home/Coder/Música/sebas/TalentPlus/Domain/Domain.csproj"
               }
             }
           }
@@ -36,11 +36,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -84,21 +79,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.121/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Domain\\Domain.csproj": {
+    "/home/Coder/Música/sebas/TalentPlus/Domain/Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Domain\\Domain.csproj",
+        "projectUniqueName": "/home/Coder/Música/sebas/TalentPlus/Domain/Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Domain\\obj\\",
+        "projectPath": "/home/Coder/Música/sebas/TalentPlus/Domain/Domain.csproj",
+        "packagesPath": "/home/Coder/.nuget/packages/",
+        "outputPath": "/home/Coder/Música/sebas/TalentPlus/Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/Coder/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -116,11 +111,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -142,21 +132,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.121/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Infrastructure\\Infrastructure.csproj": {
+    "/home/Coder/Música/sebas/TalentPlus/Infrastructure/Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "/home/Coder/Música/sebas/TalentPlus/Infrastructure/Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Infrastructure\\obj\\",
+        "projectPath": "/home/Coder/Música/sebas/TalentPlus/Infrastructure/Infrastructure.csproj",
+        "packagesPath": "/home/Coder/.nuget/packages/",
+        "outputPath": "/home/Coder/Música/sebas/TalentPlus/Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/Coder/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -168,11 +158,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Application\\Application.csproj"
+              "/home/Coder/Música/sebas/TalentPlus/Application/Application.csproj": {
+                "projectPath": "/home/Coder/Música/sebas/TalentPlus/Application/Application.csproj"
               },
-              "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Domain\\Domain.csproj"
+              "/home/Coder/Música/sebas/TalentPlus/Domain/Domain.csproj": {
+                "projectPath": "/home/Coder/Música/sebas/TalentPlus/Domain/Domain.csproj"
               }
             }
           }
@@ -181,11 +171,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -233,7 +218,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.121/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Lenovo\\.nuget\\packages\\": {}
+    "/home/Coder/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Domain\\Domain.csproj",
+      "projectUniqueName": "/home/Coder/Música/sebas/TalentPlus/Domain/Domain.csproj",
       "projectName": "Domain",
-      "projectPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Domain\\Domain.csproj",
-      "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Domain\\obj\\",
+      "projectPath": "/home/Coder/Música/sebas/TalentPlus/Domain/Domain.csproj",
+      "packagesPath": "/home/Coder/.nuget/packages/",
+      "outputPath": "/home/Coder/Música/sebas/TalentPlus/Domain/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/Coder/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -38,11 +38,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -64,7 +59,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.121/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

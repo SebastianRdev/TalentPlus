@@ -1,5 +1,3 @@
-
-
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -18,14 +16,8 @@ public static class AdminSeed
         {
             new ApplicationUser
             {
-                UserName = "admin1",
-                Email = "admin1@firmness.com",
-                EmailConfirmed = true
-            },
-            new ApplicationUser
-            {
-                UserName = "admin2",
-                Email = "admin2@firmness.com",
+                UserName = "admin",
+                Email = "admin@talentplus.com",
                 EmailConfirmed = true
             }
         };
