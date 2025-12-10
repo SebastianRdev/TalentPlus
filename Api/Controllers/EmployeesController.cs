@@ -41,6 +41,14 @@ public class EmployeesController : ControllerBase
         return Created("", null);
     }
 
+    [HttpPost("register")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Register(EmployeeRegisterDto dto)
+    {
+        await _employeeService.RegisterAsync(dto);
+        return Ok(new { message = "Registro exitoso. Se ha enviado un correo de confirmación." });
+    }
+
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(Guid id, EmployeeUpdateDto dto)
     {

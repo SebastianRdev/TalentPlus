@@ -10,6 +10,7 @@ namespace Application.Interfaces.Employees;
 public interface IEmployeeService
 {
     Task CreateAsync(EmployeeCreateDto dto);
+    Task RegisterAsync(EmployeeRegisterDto dto);
     Task UpdateAsync(Guid id, EmployeeUpdateDto dto);
     Task<Empleado> GetByDocumentAsync(string document);
     Task<IEnumerable<Empleado>> GetAllAsync();

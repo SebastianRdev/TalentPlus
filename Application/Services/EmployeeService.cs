@@ -1,5 +1,6 @@
 using Application.DTOs.Empleados;
 using Application.DTOs.Excel;
+using Application.Interfaces;
 using Application.Interfaces.Employees;
 using Domain.Entities;
 using Domain.Enums;
@@ -12,10 +13,12 @@ namespace Application.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IEmailService _emailService;
 
-        public EmployeeService(IEmployeeRepository employeeRepository)
+        public EmployeeService(IEmployeeRepository employeeRepository, IEmailService emailService)
         {
             _employeeRepository = employeeRepository;
+            _emailService = emailService;
         }
 
         // Método para crear un nuevo empleado
@@ -41,6 +44,41 @@ namespace Application.Services
 
             // Guardamos el nuevo empleado en el repositorio
             await _employeeRepository.AddAsync(employee);
+        }
+
+        public async Task RegisterAsync(EmployeeRegisterDto dto)
+        {
+            var employee = Empleado.Create(
+                dto.Documento,
+                dto.Nombres,
+                dto.Apellidos,
+                dto.FechaNacimiento,
+                dto.Direccion ?? "",
+                dto.Telefono ?? "",
+                dto.Email,
+                dto.Cargo,
+                dto.Salario ?? 0,
+                dto.FechaIngreso,
+                dto.Estado,
+                dto.NivelEducativo,
+                dto.PerfilProfesional ?? "",
+                dto.Departamento
+            );
+
+            await _employeeRepository.AddAsync(employee);
+
+            // Send Welcome Email
+            var subject = "Bienvenido a TalentPlus";
+            var body = $@"
+                <h1>Bienvenido, {dto.Nombres} {dto.Apellidos}!</h1>
+                <p>Tu registro en TalentPlus ha sido exitoso.</p>
+                <p>Ya puedes autenticarte en la plataforma cuando tu cuenta sea habilitada por un administrador.</p>
+                <br>
+                <p>Atentamente,</p>
+                <p>El equipo de TalentPlus</p>
+            ";
+
+            await _emailService.SendEmailAsync(dto.Email, subject, body);
         }
 
         // Método para actualizar un empleado existente

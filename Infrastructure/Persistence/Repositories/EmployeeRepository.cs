@@ -25,6 +25,13 @@ public class EmployeeRepository : IEmployeeRepository
             .FirstOrDefaultAsync(e => e.Documento == document);
     }
 
+    public async Task<IReadOnlyList<Empleado>> GetAllAsync()
+    {
+        return await _context.Empleados
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
     public async Task<(IReadOnlyList<Empleado> Items, int TotalCount)>
         GetPagedAsync(int page, int pageSize)
     {

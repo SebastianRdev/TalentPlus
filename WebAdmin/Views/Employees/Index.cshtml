@@ -186,6 +186,7 @@
                     </label>
                 </form>
             </div>
+            <div id="headersOutput" class="mt-4"></div>
         </div>
         <div class="flex justify-end gap-3 px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 rounded-b-xl">
             <button class="h-10 px-4 rounded-lg bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 text-sm font-bold hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors" id="cancelImportBtn">Cancelar</button>
@@ -236,10 +237,14 @@
             try {
                 // PASO 1: Llamar a /api/excel/preview
                 const apiBaseUrl = '@apiBaseUrl';
-                const previewResponse = await fetch(`${apiBaseUrl}/api/excel/preview?entityType=Customer`, {
+                console.log('🌐 [Frontend] Sending request to:', `${apiBaseUrl}/api/excel/preview?entityType=Employee`);
+                
+                const previewResponse = await fetch(`${apiBaseUrl}/api/excel/preview?entityType=Employee`, {
                     method: 'POST',
                     body: formData
                 });
+
+                console.log('✅ [Frontend] Response received. Status:', previewResponse.status, 'OK:', previewResponse.ok);
 
                 if (!previewResponse.ok) {
                     const errorText = await previewResponse.text();
@@ -248,7 +253,9 @@
                     return;
                 }
 
+                console.log('📥 [Frontend] Parsing JSON response...');
                 const previewResult = await previewResponse.json();
+                console.log('✅ [Frontend] JSON parsed successfully:', previewResult);
 
                 if (!previewResult.success) {
                     headersOutput.innerHTML = `<p class="text-red-600">❌ Error: ${previewResult.message}</p>`;
@@ -256,11 +263,17 @@
                     return;
                 }
 
-                // Close the modal automatically
-                importExcelModal.classList.add('hidden');
+                console.log('🔵 [Frontend] Preparing to show preview...');
+                // DON'T close the modal - we need to show the preview inside it
+                // importExcelModal.classList.add('hidden');
 
                 // Guardar el preview para confirmar después
                 currentPreviewData = previewResult.data;
+                console.log('📊 [Frontend] Preview data saved:', currentPreviewData);
+
+                // Hide the file upload form and initial buttons
+                document.getElementById('importExcelForm').style.display = 'none';
+                document.querySelector('#importExcelModal .flex.justify-end').style.display = 'none';
 
                 // PASO 2: Mostrar preview con filas válidas e inválidas
                 const validRows = currentPreviewData.validRows || [];
@@ -268,6 +281,7 @@
                 const totalValid = currentPreviewData.totalValid || 0;
                 const totalInvalid = currentPreviewData.totalInvalid || 0;
 
+                console.log('🎨 [Frontend] Building preview HTML...');
                 headersOutput.innerHTML = `
                     <div class="flex flex-col gap-6">
                         <!-- Stats -->
@@ -365,6 +379,10 @@
                         importExcelModal.classList.add('hidden');
                         headersOutput.innerHTML = '';
                         currentPreviewData = null;
+                        // Reset modal for next use
+                        document.getElementById('importExcelForm').style.display = 'block';
+                        document.querySelector('#importExcelModal .flex.justify-end').style.display = 'flex';
+                        document.getElementById('file-upload').value = '';
                     });
                 }
 
@@ -387,7 +405,7 @@
                                 const errorText = await confirmResponse.text();
                                 alert('Error al confirmar importación: ' + errorText);
                                 confirmInsertBtn.disabled = false;
-                                confirmInsertBtn.textContent = `Confirmar e Insertar ${totalValid} registros`;
+                                confirmInsertBtn.textContent = `Confirm and Insert ${totalValid} records`;
                                 return;
                             }
 
@@ -396,11 +414,11 @@
                             if (!confirmResult.success) {
                                 alert('Error: ' + confirmResult.message);
                                 confirmInsertBtn.disabled = false;
-                                confirmInsertBtn.textContent = `Confirmar e Insertar ${totalValid} registros`;
+                                confirmInsertBtn.textContent = `Confirm and Insert ${totalValid} records`;
                                 return;
                             }
 
-                            // Éxito!
+                            // Succesfully!
                             const insertedCount = confirmResult.data.insertedCount || 0;
                             const failedRows = confirmResult.data.failedRows || [];
 
@@ -409,13 +427,13 @@
                                   `Filas fallidas: ${failedRows.length}`);
 
                             importExcelModal.classList.add('hidden');
-                            window.location.reload(); // Recargar para ver los nuevos datos
+                            window.location.reload();
 
                         } catch (err) {
                             console.error(err);
                             alert('Error al confirmar importación: ' + err.message);
                             confirmInsertBtn.disabled = false;
-                            confirmInsertBtn.textContent = `Confirmar e Insertar ${totalValid} registros`;
+                            confirmInsertBtn.textContent = `Confirm and Insert ${totalValid} records`;
                         }
                     });
                 }

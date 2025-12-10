@@ -20,9 +20,9 @@ using Application.DTOs.Excel;
 using Application.Excel;
 using Application.Interfaces.Employees;
 using Application.Services;
-//using Application.Configuration;
+using Application.Configuration;
 //using Infrastructure.Services.Identity;
-//using Infrastructure.Services.Email;
+using Infrastructure.Services.Email;
 using Google.GenAI;
 using Application.Validators.Empleados;
 using Infrastructure.Data;
@@ -160,7 +160,7 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
 builder.Services.AddScoped<IEmployeeExcelImportService, EmployeeExcelImportService>();
-//builder.Services.AddScoped<IEmailService, SmtpEmailService>();
+builder.Services.AddScoped<IEmailService, SmtpEmailService>();
 //builder.Services.AddScoped<IReceiptPdfService, ReceiptPdfService>();
 builder.Services.AddScoped<IJwtService, Infrastructure.Services.Identity.JwtService>();
 
@@ -171,7 +171,6 @@ builder.Services.AddScoped<IJwtService, Infrastructure.Services.Identity.JwtServ
 // ==========================================
 // 11.1 EMAIL CONFIGURATION
 // ==========================================
-/*
 builder.Services.Configure<EmailSettings>(options =>
 {
     options.SmtpHost = Environment.GetEnvironmentVariable("SMTP_HOST") ?? "smtp.gmail.com";
@@ -183,7 +182,6 @@ builder.Services.Configure<EmailSettings>(options =>
     options.EnableSsl = bool.Parse(Environment.GetEnvironmentVariable("SMTP_ENABLE_SSL") ?? "true");
     options.AdminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL") ?? "";
 });
-*/
 // ==========================================
 // 11.2 GEMINI .NET OFFICIAL CLIENT
 // ==========================================

@@ -6,6 +6,7 @@ public interface IEmployeeRepository
 {
     Task<Empleado?> GetByIdAsync(Guid id);
     Task<Empleado?> GetByDocumentAsync(string document);
+    Task<IReadOnlyList<Empleado>> GetAllAsync();
 
     Task<(IReadOnlyList<Empleado> Items, int TotalCount)> 
         GetPagedAsync(int page, int pageSize);
