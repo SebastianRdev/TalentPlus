@@ -11466,19 +11466,19 @@
     ]
   },
   "packageFolders": {
-    "/home/Coder/.nuget/packages/": {}
+    "C:\\Users\\Lenovo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/Coder/Música/sebas/TalentPlus/WebAdmin/WebAdmin.csproj",
+      "projectUniqueName": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\WebAdmin\\WebAdmin.csproj",
       "projectName": "WebAdmin",
-      "projectPath": "/home/Coder/Música/sebas/TalentPlus/WebAdmin/WebAdmin.csproj",
-      "packagesPath": "/home/Coder/.nuget/packages/",
-      "outputPath": "/home/Coder/Música/sebas/TalentPlus/WebAdmin/obj/",
+      "projectPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\WebAdmin\\WebAdmin.csproj",
+      "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\WebAdmin\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/Coder/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -11490,11 +11490,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/home/Coder/Música/sebas/TalentPlus/Domain/Domain.csproj": {
-              "projectPath": "/home/Coder/Música/sebas/TalentPlus/Domain/Domain.csproj"
+            "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Domain\\Domain.csproj"
             },
-            "/home/Coder/Música/sebas/TalentPlus/Infrastructure/Infrastructure.csproj": {
-              "projectPath": "/home/Coder/Música/sebas/TalentPlus/Infrastructure/Infrastructure.csproj"
+            "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\Lenovo\\Documents\\Riwi\\TalentPlus\\Infrastructure\\Infrastructure.csproj"
             }
           }
         }
@@ -11503,6 +11503,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -11549,7 +11554,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.121/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

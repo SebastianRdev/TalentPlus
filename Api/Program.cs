@@ -35,7 +35,7 @@ var builder = WebApplication.CreateBuilder(args);
 // ==========================================
 // 1. LOAD .env FILE FIRST
 // ==========================================
-Env.Load("/home/Coder/Música/sebas/TalentPlus/.env");
+Env.Load("../.env");
 builder.Configuration.AddEnvironmentVariables();
 
 // ==========================================
