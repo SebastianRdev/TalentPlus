@@ -260,16 +260,6 @@ if (builder.Environment.IsDevelopment())
 var app = builder.Build();
 
 // ==========================================
-// CREATE RESUMES DIRECTORY
-// ==========================================
-var resumesPath = Path.Combine(app.Environment.WebRootPath, "resume");
-if (!Directory.Exists(resumesPath))
-{
-    Directory.CreateDirectory(resumesPath);
-    Console.WriteLine("✅ Resumes directory created");
-}
-
-// ==========================================
 // 15. MIDDLEWARE PIPELINE
 // ==========================================
 if (app.Environment.IsDevelopment())

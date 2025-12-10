@@ -44,7 +44,7 @@ public class SqlAgentService : ISqlAgentService
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error processing AI Agent query");
-            return "Ocurrió un error interno al procesar tu consulta.";
+            return "An internal error occurred while processing your query.";
         }
     }
 
@@ -54,11 +54,11 @@ public class SqlAgentService : ISqlAgentService
             Table:
             - Empleados (Id, Nombres, Apellidos, Documento, FechaNacimiento, Direccion, Telefono, Email, Cargo, Salario, FechaIngreso, Estado, NivelEducativo, PerfilProfesional, Departamento, ApplicationUserId, CreatedAt, UpdatedAt)
 
-            Enums:
-            - Cargo: 'Ingeniero', 'SoporteTecnico', 'Coordinador', 'Analista', 'Desarrollador', 'Administrador', 'Auxiliar'
-            - EstadoEmpleado: 'Activo', 'Inactivo', 'Vacaciones'
-            - NivelEducativo: 'Tecnico', 'Tecnologo', 'Profesional', 'Especializacion', 'Maestria'
-            - Departamento: 'RecursosHumanos', 'Tecnologia', 'Operaciones', 'Logistica', 'Marketing', 'Ventas', 'Contabilidad'
+            Enums(The numbers that appear are their corresponding numbers):
+            - Cargo: 'Ingeniero = 1', 'SoporteTecnico = 2', 'Coordinador = 3', 'Analista = 4', 'Desarrollador = 5', 'Administrador = 6', 'Auxiliar = 7'
+            - EstadoEmpleado: 'Activo = 1', 'Vacaciones = 2', 'Inactivo = 3'
+            - NivelEducativo: 'Tecnico = 1', 'Tecnologo = 2', 'Profesional = 3', 'Especializacion = 4', 'Maestria = 5'
+            - Departamento: 'RecursosHumanos = 1', 'Tecnologia = 2', 'Operaciones = 3', 'Logistica = 4', 'Marketing = 5', 'Ventas = 6', 'Contabilidad = 7'
 
             Rules:
             1. Return ONLY the SQL Query. No markdown formats (no ```sql).
