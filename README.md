@@ -46,7 +46,7 @@ dotnet run --project WebAdmin
 #### Con Docker
 You can set up the entire environment using Docker Compose.:
 ```bash
-docker-compose up -d
+docker compose up --build -d
 ```
 
 Accede a los servicios en:
